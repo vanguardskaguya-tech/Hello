@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Fredoka", sans-serif;
+  --font-display: "Fredoka", sans-serif;
+  
+  --color-brand: #ef4444; /* Red 500 */
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-text: rgba(255, 255, 255, 0.8);
+  
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+}
+
+@layer base {
+  body {
+    @apply bg-[#0a0a0c] text-slate-200 selection:bg-red-500/30;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-card {
+    @apply rounded-3xl p-6 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-input {
+    @apply border border-white/10 rounded-full px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand/40 focus:bg-white/10 transition-all;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+  }
+
+  .glass-button {
+    @apply border border-white/10 rounded-full px-4 py-2 active:scale-95 transition-all flex items-center justify-center gap-2;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .glass-gradient-text {
+    background: linear-gradient(to bottom right, #fff, rgba(255, 255, 255, 0.4));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20;
+}

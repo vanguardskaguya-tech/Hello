@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'vanguardskaguya@gmail.com' && request.auth.token.email_verified == true
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidTip(data) {
+      return data.keys().hasAll(['title', 'content', 'category', 'createdAt']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.content is string && data.content.size() <= 5000 &&
+             data.category is string &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidAsset(data) {
+      return data.keys().hasAll(['title', 'url', 'type', 'createdAt']) &&
+             data.title is string && data.title.size() <= 200 &&
+             data.url is string && data.url.size() <= 1000 &&
+             data.type in ['sound', 'picture'] &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidNiche(data) {
+      return data.keys().hasAll(['name', 'description']) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.description is string && data.description.size() <= 2000;
+    }
+
+    function isValidGuideStep(data) {
+      return data.keys().hasAll(['order', 'title', 'content']) &&
+             data.order is number &&
+             data.title is string && data.title.size() <= 200 &&
+             data.content is string && data.content.size() <= 5000;
+    }
+
+    // Tips Collection
+    match /tips/{tipId} {
+      allow read: if true; // Publicly readable for the community
+      allow create, update: if isAdmin() && isValidTip(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Assets Collection
+    match /assets/{assetId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidAsset(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Niches Collection
+    match /niches/{nicheId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidNiche(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Guide Collection
+    match /guide/{stepId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidGuideStep(request.resource.data);
+      allow delete: if isAdmin();
+    }
+  }
+}

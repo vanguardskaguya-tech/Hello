@@ -1,0 +1,6 @@
+{
+  "name": "TubeFlow: YouTube Automation Hub",
+  "description": "An all-in-one platform for YouTube automation communities. Manage tips, organize assets (sounds, pictures), explore niches, and follow a step-by-step starter guide with a polished fluid glass aesthetic.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

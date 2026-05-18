@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "Tip": {
+      "title": "YouTube Automation Tip",
+      "description": "A tip or strategy for YouTube automation",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "authorId": { "type": "string" }
+      },
+      "required": ["title", "content", "category", "createdAt"]
+    },
+    "Asset": {
+      "title": "Drive Asset",
+      "description": "A sound or picture asset for YouTube content",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "url": { "type": "string" },
+        "type": { "type": "string", "enum": ["sound", "picture"] },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "url", "type", "createdAt"]
+    },
+    "Niche": {
+      "title": "YouTube Niche",
+      "description": "Information about a specific YouTube niche",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "potential": { "type": "string" },
+        "difficulty": { "type": "string" }
+      },
+      "required": ["name", "description"]
+    },
+    "GuideStep": {
+      "title": "Starter Guide Step",
+      "description": "A step in the YouTube starter guide",
+      "type": "object",
+      "properties": {
+        "order": { "type": "number" },
+        "title": { "type": "string" },
+        "content": { "type": "string" }
+      },
+      "required": ["order", "title", "content"]
+    }
+  },
+  "firestore": {
+    "tips": {
+      "schema": "Tip",
+      "description": "Collection of YouTube automation tips"
+    },
+    "assets": {
+      "schema": "Asset",
+      "description": "Collection of sounds and pictures"
+    },
+    "niches": {
+      "schema": "Niche",
+      "description": "List of available niches"
+    },
+    "guide": {
+      "schema": "GuideStep",
+      "description": "Steps for the starter guide"
+    }
+  }
+}
